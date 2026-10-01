@@ -35,7 +35,7 @@
   },
   "name": "n8n-nodes-test-project",
   "nativeShip": {
-    "artifactSha256": "3f34f86170d85bae5aacec061a0102f865f404e10df5e414bfc8fadf43abd31b"
+    "artifactSha256": "01b0b2c892922825457a2309f9f137a33f35c916fa0b71c626d98b350637de6c"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
@@ -53,5 +53,5 @@
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix"
   },
-  "version": "1.0.1"
+  "version": "2.0.0"
 }

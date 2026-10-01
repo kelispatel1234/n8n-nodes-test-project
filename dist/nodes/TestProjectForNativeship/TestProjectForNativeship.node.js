@@ -161,7 +161,7 @@ class TestProjectForNativeship {
             version: [
                 1
             ],
-            subtitle: "={{((JSON.parse(\"\\u007b\\\"account\\\":\\u007b\\\"checkAccountBalance\\\":\\\"checkRemainingCredits: account\\\"\\u007d,\\\"bulkVerification\\\":\\u007b\\\"createBulkVerificationTask\\\":\\\"createABulkVerificationTask: bulkVerification\\\",\\\"getBulkVerificationTaskResult\\\":\\\"getBulkTaskProgressOrResults: bulkVerification\\\"\\u007d,\\\"emailVerification\\\":\\u007b\\\"verifyEmail\\\":\\\"verifyOneEmailAddress: emailVerification\\\"\\u007d\\u007d\"))[$parameter[\"resource\"]] || {})[$parameter[\"operation\"]] || ($parameter[\"operation\"] + \": \" + $parameter[\"resource\"])}}",
+            subtitle: "={{((JSON.parse(\"\\u007b\\\"account\\\":\\u007b\\\"checkAccountBalance\\\":\\\"checkRemainingCredits: account\\\"\\u007d,\\\"bulkVerification\\\":\\u007b\\\"createBulkVerificationTask\\\":\\\"createABulkVerificationTask: bulkVerification\\\",\\\"verifyEmail\\\":\\\"verifyOneEmail: bulkVerification\\\"\\u007d\\u007d\"))[$parameter[\"resource\"]] || {})[$parameter[\"operation\"]] || ($parameter[\"operation\"] + \": \" + $parameter[\"resource\"])}}",
             description: "this project is for test",
             documentationUrl: "https://nativeship.io",
             hints: [
@@ -215,10 +215,6 @@ class TestProjectForNativeship {
                         {
                             name: "Bulk Verification",
                             value: "bulkVerification"
-                        },
-                        {
-                            name: "Email Verification",
-                            value: "emailVerification"
                         }
                     ]
                 },
@@ -240,7 +236,7 @@ class TestProjectForNativeship {
                             name: "Check Remaining Credits",
                             value: "checkAccountBalance",
                             action: "Check remaining credits account",
-                            description: "Returns the account's API status and remaining daily and instant credits"
+                            description: "Returns the account's API status daily and instant credits"
                         }
                     ]
                 },
@@ -265,10 +261,10 @@ class TestProjectForNativeship {
                             description: "Submits up to 50,000 email addresses for asynchronous verification in power mode. reoon removes duplicate addresses before processing. the API key must be included in the JSON body. bulk verification."
                         },
                         {
-                            name: "Get Bulk Task Progress Or Results",
-                            value: "getBulkVerificationTaskResult",
-                            action: "Get bulk task progress or results bulk verification",
-                            description: "Returns task progress while verification is running and email results when they are ready. reoon's formal request URL uses `task_id`; one python example in its documentation uses `task-ID` instead. bulk verification."
+                            name: "Verify One Email",
+                            value: "verifyEmail",
+                            action: "Verify one email bulk verification",
+                            description: "Quick mode is the default and checks syntax, disposable status, mx and related signals without checking whether the individual inbox exists. power mode performs deeper checks and can take from seconds to over a minute. reoon advises against continuously using this endpoint with more than five concurrent threads; use the bulk API for larger lists. bulk verification."
                         }
                     ]
                 },
@@ -335,46 +331,6 @@ class TestProjectForNativeship {
                     ]
                 },
                 {
-                    displayName: "Task ID",
-                    name: "task_id",
-                    type: "string",
-                    default: "",
-                    required: true,
-                    description: "Task ID returned by the bulk task creation operation",
-                    displayOptions: {
-                        show: {
-                            resource: [
-                                "bulkVerification"
-                            ],
-                            operation: [
-                                "getBulkVerificationTaskResult"
-                            ]
-                        }
-                    }
-                },
-                {
-                    displayName: "Operation",
-                    name: "operation",
-                    type: "options",
-                    noDataExpression: true,
-                    displayOptions: {
-                        show: {
-                            resource: [
-                                "emailVerification"
-                            ]
-                        }
-                    },
-                    default: "verifyEmail",
-                    options: [
-                        {
-                            name: "Verify One Email Address",
-                            value: "verifyEmail",
-                            action: "Verify one email address email verification",
-                            description: "Quick mode is the default and checks syntax, disposable status, mx and related signals without checking whether the individual inbox exists. power mode performs deeper checks and can take from seconds to over a minute. reoon advises against continuously using this endpoint with more than five concurrent threads; use the bulk API for larger lists. email verification."
-                        }
-                    ]
-                },
-                {
                     displayName: "Email",
                     name: "email",
                     type: "string",
@@ -385,7 +341,7 @@ class TestProjectForNativeship {
                     displayOptions: {
                         show: {
                             resource: [
-                                "emailVerification"
+                                "bulkVerification"
                             ],
                             operation: [
                                 "verifyEmail"
@@ -402,7 +358,7 @@ class TestProjectForNativeship {
                     displayOptions: {
                         show: {
                             resource: [
-                                "emailVerification"
+                                "bulkVerification"
                             ],
                             operation: [
                                 "verifyEmail"

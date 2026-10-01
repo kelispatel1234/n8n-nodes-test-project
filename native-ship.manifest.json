@@ -497,12 +497,6 @@
           "name": "bulkVerification"
         },
         "displayName": "Bulk verification"
-      },
-      "emailVerification": {
-        "source": {
-          "name": "emailVerification"
-        },
-        "displayName": "Email verification"
       }
     },
     "operations": {
@@ -513,7 +507,7 @@
           "path": "/check-account-balance/"
         },
         "displayName": "Check remaining credits",
-        "description": "Returns the account's API status and remaining daily and instant credits.",
+        "description": "Returns the account's API status  daily and instant credits.",
         "hidden": false,
         "resource": "account"
       },
@@ -537,6 +531,7 @@
         "displayName": "Get bulk task progress or results",
         "description": "Returns task progress while verification is running and email results when they are ready. Reoon's formal request URL uses `task_id`; one Python example in its documentation uses `task-id` instead.",
         "hidden": false,
+        "removed": true,
         "resource": "bulkVerification"
       },
       "verifyEmail": {
@@ -545,10 +540,10 @@
           "method": "GET",
           "path": "/verify"
         },
-        "displayName": "Verify one email address",
+        "displayName": "Verify one email",
         "description": "Quick mode is the default and checks syntax, disposable status, MX and related signals without checking whether the individual inbox exists. Power mode performs deeper checks and can take from seconds to over a minute. Reoon advises against continuously using this endpoint with more than five concurrent threads; use the bulk API for larger lists.",
         "hidden": false,
-        "resource": "emailVerification"
+        "resource": "bulkVerification"
       }
     },
     "credentials": {

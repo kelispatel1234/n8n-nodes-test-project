@@ -19,7 +19,7 @@ Configure the generated API key credential in n8n before using the node.
 - `GET /get-result-bulk-verification-task/` - Get bulk task progress or results
   - Retry Contract: none
   - Pagination Contract: none
-- `GET /verify` - Verify one email address
+- `GET /verify` - Verify one email
   - Retry Contract: none
   - Pagination Contract: none
 
