@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "style": "programmatic",
+  "style": "declarative",
   "names": {
     "typeName": "TestProjectForNativeship",
     "nodeName": "testProjectForNativeship",
@@ -26,41 +26,35 @@
   "diagnostics": [
     {
       "severity": "warning",
-      "code": "NF_SCHEMA_COMPOSITION",
-      "location": "/paths/~1get-result-bulk-verification-task~1/get/responses/200/content/application~1json/schema/alternatives/0/properties/results/alternatives/0/items/allOf",
-      "explanation": "The specification uses an allOf composition that cannot be safely flattened into typed fields.",
-      "resolution": "The generated operation uses the raw JSON boundary for the composed value."
-    },
-    {
-      "severity": "warning",
-      "code": "NF_SCHEMA_COMPOSITION",
-      "location": "/paths/~1verify/get/responses/200/content/application~1json/schema/alternatives/0/allOf",
-      "explanation": "The specification uses an allOf composition that cannot be safely flattened into typed fields.",
-      "resolution": "The generated operation uses the raw JSON boundary for the composed value."
-    },
-    {
-      "severity": "warning",
-      "code": "NF_SCHEMA_COMPOSITION",
-      "location": "/paths/~1verify/get/responses/200/content/application~1json/schema/alternatives/1/allOf",
-      "explanation": "The specification uses an allOf composition that cannot be safely flattened into typed fields.",
-      "resolution": "The generated operation uses the raw JSON boundary for the composed value."
+      "code": "NF_PAGINATION_UNSAFE",
+      "location": "/paths/~1startups/get",
+      "explanation": "Operation \"listStartups\" looks paginated, but no explicit safe Pagination Contract is available.",
+      "resolution": "The generated operation remains single-page until an explicit bounded Pagination Contract is provided."
     }
   ],
   "operationContracts": [
     {
-      "operationId": "checkAccountBalance",
+      "operationId": "getStartup",
       "method": "GET",
-      "path": "/check-account-balance/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+      "path": "/startups/{slug}",
+      "serverId": "documentServer1HttpsTrustmrrComApiV1",
       "authentication": [
         {
           "schemes": [
-            "ReoonApiKey"
+            "TrustMRRBearer"
           ],
           "scopes": []
         }
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "name": "slug",
+          "inputName": "slug",
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
       "request": {
         "contentType": "application/json",
         "representation": "structured",
@@ -73,194 +67,50 @@
       "response": {
         "fields": [
           {
-            "name": "api_status",
-            "type": "string"
-          },
-          {
-            "name": "remaining_daily_credits",
-            "type": "integer"
-          },
-          {
-            "name": "remaining_instant_credits",
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "type": "string"
+            "name": "data",
+            "type": "object"
           }
         ],
         "simplifiedFields": [
-          "api_status",
-          "remaining_daily_credits",
-          "remaining_instant_credits",
-          "status"
-        ]
-      },
-      "errors": [],
-      "requestPlan": {
-        "operationId": "checkAccountBalance",
-        "method": "GET",
-        "path": "/check-account-balance/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-        "request": {
-          "method": "GET",
-          "url": "=/check-account-balance/",
-          "query": [],
-          "body": [],
-          "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          }
-        },
-        "authentication": [
-          {
-            "schemes": [
-              "ReoonApiKey"
-            ],
-            "scopes": []
-          }
-        ],
-        "retry": {},
-        "pagination": {
-          "style": "none"
-        },
-        "response": {
-          "fields": [
-            {
-              "name": "api_status",
-              "type": "string"
-            },
-            {
-              "name": "remaining_daily_credits",
-              "type": "integer"
-            },
-            {
-              "name": "remaining_instant_credits",
-              "type": "integer"
-            },
-            {
-              "name": "status",
-              "type": "string"
-            }
-          ],
-          "simplifiedFields": [
-            "api_status",
-            "remaining_daily_credits",
-            "remaining_instant_credits",
-            "status"
-          ]
-        },
-        "errors": [],
-        "unsupportedSemantics": []
-      }
-    },
-    {
-      "operationId": "createBulkVerificationTask",
-      "method": "POST",
-      "path": "/create-bulk-verification-task/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-      "authentication": [
-        {
-          "schemes": [
-            "ReoonApiKey"
-          ],
-          "scopes": []
-        }
-      ],
-      "parameters": [],
-      "request": {
-        "contentType": "application/json",
-        "representation": "structured",
-        "fields": [
-          {
-            "name": "emails",
-            "inputName": "emails",
-            "type": "array",
-            "required": true
-          },
-          {
-            "name": "key",
-            "inputName": "key",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "name",
-            "inputName": "name",
-            "type": "string",
-            "required": false
-          }
-        ]
-      },
-      "retry": {},
-      "pagination": {
-        "style": "none"
-      },
-      "response": {
-        "fields": [
-          {
-            "name": "count_duplicates_removed",
-            "type": "integer"
-          },
-          {
-            "name": "count_processing",
-            "type": "integer"
-          },
-          {
-            "name": "count_rejected_emails",
-            "type": "integer"
-          },
-          {
-            "name": "count_submitted",
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "type": "string"
-          },
-          {
-            "name": "task_id",
-            "type": "integer"
-          }
-        ],
-        "simplifiedFields": [
-          "count_duplicates_removed",
-          "count_processing",
-          "count_rejected_emails",
-          "count_submitted",
-          "status",
-          "task_id"
+          "data"
         ]
       },
       "errors": [
         {
-          "status": "default",
-          "title": "Reoon returned an API-level error. The HTTP status is not specified in the documentation."
+          "status": "400",
+          "title": "Invalid or missing request parameters."
+        },
+        {
+          "status": "401",
+          "title": "The API key is missing or invalid."
+        },
+        {
+          "status": "403",
+          "title": "API access is disabled under the Acceptable Use Policy."
+        },
+        {
+          "status": "404",
+          "title": "The requested resource does not exist."
+        },
+        {
+          "status": "429",
+          "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+        },
+        {
+          "status": "500",
+          "title": "An unexpected server error occurred."
         }
       ],
       "requestPlan": {
-        "operationId": "createBulkVerificationTask",
-        "method": "POST",
-        "path": "/create-bulk-verification-task/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+        "operationId": "getStartup",
+        "method": "GET",
+        "path": "/startups/{slug}",
+        "serverId": "documentServer1HttpsTrustmrrComApiV1",
         "request": {
-          "method": "POST",
-          "url": "=/create-bulk-verification-task/",
+          "method": "GET",
+          "url": "=/startups/{{$parameter[\"slug\"]}}",
           "query": [],
-          "body": [
-            {
-              "name": "emails",
-              "source": "parameter"
-            },
-            {
-              "name": "key",
-              "source": "parameter"
-            },
-            {
-              "name": "name",
-              "source": "additionalFields"
-            }
-          ],
+          "body": [],
           "headers": {
             "Accept": "application/json",
             "Content-Type": "application/json"
@@ -269,7 +119,7 @@
         "authentication": [
           {
             "schemes": [
-              "ReoonApiKey"
+              "TrustMRRBearer"
             ],
             "scopes": []
           }
@@ -281,144 +131,165 @@
         "response": {
           "fields": [
             {
-              "name": "count_duplicates_removed",
-              "type": "integer"
-            },
-            {
-              "name": "count_processing",
-              "type": "integer"
-            },
-            {
-              "name": "count_rejected_emails",
-              "type": "integer"
-            },
-            {
-              "name": "count_submitted",
-              "type": "integer"
-            },
-            {
-              "name": "status",
-              "type": "string"
-            },
-            {
-              "name": "task_id",
-              "type": "integer"
+              "name": "data",
+              "type": "object"
             }
           ],
           "simplifiedFields": [
-            "count_duplicates_removed",
-            "count_processing",
-            "count_rejected_emails",
-            "count_submitted",
-            "status",
-            "task_id"
+            "data"
           ]
         },
         "errors": [
           {
-            "status": "default",
-            "title": "Reoon returned an API-level error. The HTTP status is not specified in the documentation."
-          }
-        ],
-        "unsupportedSemantics": [
-          "advanced parameter emails"
-        ]
-      }
-    },
-    {
-      "operationId": "getBulkVerificationTaskResult",
-      "method": "GET",
-      "path": "/get-result-bulk-verification-task/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-      "authentication": [
-        {
-          "schemes": [
-            "ReoonApiKey"
-          ],
-          "scopes": []
-        }
-      ],
-      "parameters": [
-        {
-          "name": "task_id",
-          "inputName": "task_id",
-          "location": "query",
-          "required": true,
-          "arrayFormat": "indices"
-        }
-      ],
-      "request": {
-        "contentType": "application/json",
-        "representation": "structured",
-        "fields": []
-      },
-      "retry": {},
-      "pagination": {
-        "style": "none"
-      },
-      "response": {},
-      "errors": [],
-      "requestPlan": {
-        "operationId": "getBulkVerificationTaskResult",
-        "method": "GET",
-        "path": "/get-result-bulk-verification-task/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-        "request": {
-          "method": "GET",
-          "url": "=/get-result-bulk-verification-task/",
-          "query": [
-            {
-              "name": "task_id",
-              "source": "parameter"
-            }
-          ],
-          "body": [],
-          "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          }
-        },
-        "authentication": [
+            "status": "400",
+            "title": "Invalid or missing request parameters."
+          },
           {
-            "schemes": [
-              "ReoonApiKey"
-            ],
-            "scopes": []
+            "status": "401",
+            "title": "The API key is missing or invalid."
+          },
+          {
+            "status": "403",
+            "title": "API access is disabled under the Acceptable Use Policy."
+          },
+          {
+            "status": "404",
+            "title": "The requested resource does not exist."
+          },
+          {
+            "status": "429",
+            "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+          },
+          {
+            "status": "500",
+            "title": "An unexpected server error occurred."
           }
         ],
-        "retry": {},
-        "pagination": {
-          "style": "none"
-        },
-        "response": {},
-        "errors": [],
         "unsupportedSemantics": []
       }
     },
     {
-      "operationId": "verifyEmail",
+      "operationId": "listStartups",
       "method": "GET",
-      "path": "/verify",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+      "path": "/startups",
+      "serverId": "documentServer1HttpsTrustmrrComApiV1",
       "authentication": [
         {
           "schemes": [
-            "ReoonApiKey"
+            "TrustMRRBearer"
           ],
           "scopes": []
         }
       ],
       "parameters": [
         {
-          "name": "email",
-          "inputName": "email",
+          "name": "page",
+          "inputName": "page",
           "location": "query",
-          "required": true,
+          "required": false,
           "arrayFormat": "indices"
         },
         {
-          "name": "mode",
-          "inputName": "mode",
+          "name": "limit",
+          "inputName": "limit",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "sort",
+          "inputName": "sort",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "onSale",
+          "inputName": "onSale",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "category",
+          "inputName": "category",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "xHandle",
+          "inputName": "xHandle",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "teamSize",
+          "inputName": "teamSize",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "fundingStatus",
+          "inputName": "fundingStatus",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minRevenue",
+          "inputName": "minRevenue",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxRevenue",
+          "inputName": "maxRevenue",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minMrr",
+          "inputName": "minMrr",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxMrr",
+          "inputName": "maxMrr",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minGrowth",
+          "inputName": "minGrowth",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxGrowth",
+          "inputName": "maxGrowth",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minPrice",
+          "inputName": "minPrice",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxPrice",
+          "inputName": "maxPrice",
           "location": "query",
           "required": false,
           "arrayFormat": "indices"
@@ -433,23 +304,119 @@
       "pagination": {
         "style": "none"
       },
-      "response": {},
-      "errors": [],
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "array"
+          },
+          {
+            "name": "meta",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "data",
+          "meta"
+        ]
+      },
+      "errors": [
+        {
+          "status": "400",
+          "title": "Invalid or missing request parameters."
+        },
+        {
+          "status": "401",
+          "title": "The API key is missing or invalid."
+        },
+        {
+          "status": "403",
+          "title": "API access is disabled under the Acceptable Use Policy."
+        },
+        {
+          "status": "404",
+          "title": "The requested resource does not exist."
+        },
+        {
+          "status": "429",
+          "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+        },
+        {
+          "status": "500",
+          "title": "An unexpected server error occurred."
+        }
+      ],
       "requestPlan": {
-        "operationId": "verifyEmail",
+        "operationId": "listStartups",
         "method": "GET",
-        "path": "/verify",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+        "path": "/startups",
+        "serverId": "documentServer1HttpsTrustmrrComApiV1",
         "request": {
           "method": "GET",
-          "url": "=/verify",
+          "url": "=/startups",
           "query": [
             {
-              "name": "email",
-              "source": "parameter"
+              "name": "page",
+              "source": "additionalFields"
             },
             {
-              "name": "mode",
+              "name": "limit",
+              "source": "additionalFields"
+            },
+            {
+              "name": "sort",
+              "source": "additionalFields"
+            },
+            {
+              "name": "onSale",
+              "source": "additionalFields"
+            },
+            {
+              "name": "category",
+              "source": "additionalFields"
+            },
+            {
+              "name": "xHandle",
+              "source": "additionalFields"
+            },
+            {
+              "name": "teamSize",
+              "source": "additionalFields"
+            },
+            {
+              "name": "fundingStatus",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minRevenue",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxRevenue",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minMrr",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxMrr",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minGrowth",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxGrowth",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minPrice",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxPrice",
               "source": "additionalFields"
             }
           ],
@@ -462,7 +429,7 @@
         "authentication": [
           {
             "schemes": [
-              "ReoonApiKey"
+              "TrustMRRBearer"
             ],
             "scopes": []
           }
@@ -471,8 +438,48 @@
         "pagination": {
           "style": "none"
         },
-        "response": {},
-        "errors": [],
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "array"
+            },
+            {
+              "name": "meta",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "data",
+            "meta"
+          ]
+        },
+        "errors": [
+          {
+            "status": "400",
+            "title": "Invalid or missing request parameters."
+          },
+          {
+            "status": "401",
+            "title": "The API key is missing or invalid."
+          },
+          {
+            "status": "403",
+            "title": "API access is disabled under the Acceptable Use Policy."
+          },
+          {
+            "status": "404",
+            "title": "The requested resource does not exist."
+          },
+          {
+            "status": "429",
+            "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+          },
+          {
+            "status": "500",
+            "title": "An unexpected server error occurred."
+          }
+        ],
         "unsupportedSemantics": []
       }
     }
@@ -486,71 +493,42 @@
       "iconData": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 16 16\"><title>people-sync-16</title><g fill=\"none\"><path fill=\"url(#SVG1EjTncoQ)\" d=\"M9.5 10.5A1.5 1.5 0 0 0 8 9H3a1.5 1.5 0 0 0-1.5 1.5v.075s0 2.925 4 2.925c3.812 0 3.991-2.656 4-2.906z\"/><path fill=\"url(#SVGIYikwdCD)\" d=\"M9.5 10.5A1.5 1.5 0 0 0 8 9H3a1.5 1.5 0 0 0-1.5 1.5v.075s0 2.925 4 2.925c3.812 0 3.991-2.656 4-2.906z\"/><path fill=\"url(#SVGDX11AI3z)\" fill-opacity=\".5\" d=\"M9.5 10.5A1.5 1.5 0 0 0 8 9H3a1.5 1.5 0 0 0-1.5 1.5v.075s0 2.925 4 2.925c3.812 0 3.991-2.656 4-2.906z\"/><path fill=\"url(#SVGmOs90doI)\" d=\"M11.5 8a2 2 0 1 0 0-4a2 2 0 0 0 0 4\"/><path fill=\"url(#SVG2kBjB0tJ)\" d=\"M8 5.5a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0\"/><path fill=\"url(#SVG7UcqRLQv)\" d=\"M16 11.5a4.5 4.5 0 1 0-9 0a4.5 4.5 0 0 0 9 0\"/><path fill=\"url(#SVGqjbjscWV)\" d=\"M13.5 8.5a.5.5 0 0 1 .5.5v1.5a.5.5 0 0 1-.5.5H12a.5.5 0 0 1 0-1h.468a2 2 0 0 0-.933-.25a2 2 0 0 0-1.45.586a.5.5 0 0 1-.706-.707A3 3 0 0 1 13 9.152V9a.5.5 0 0 1 .5-.5m-.876 5.532A3 3 0 0 1 10 13.848V14a.5.5 0 0 1-1 0v-1.5a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1h-.468q.075.042.155.077a2 2 0 0 0 2.227-.413a.5.5 0 0 1 .707.707c-.285.285-.624.51-.997.66\"/><defs><linearGradient id=\"SVG1EjTncoQ\" x1=\"3.402\" x2=\"5\" y1=\"9.598\" y2=\"14.134\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".125\" stop-color=\"#bd96ff\"/><stop offset=\"1\" stop-color=\"#9c6cfe\"/></linearGradient><linearGradient id=\"SVGIYikwdCD\" x1=\"5.5\" x2=\"7.75\" y1=\"8.464\" y2=\"15.939\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#885edb\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#e362f8\"/></linearGradient><linearGradient id=\"SVGmOs90doI\" x1=\"10.451\" x2=\"12.49\" y1=\"4.532\" y2=\"7.787\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".125\" stop-color=\"#9c6cfe\"/><stop offset=\"1\" stop-color=\"#7a41dc\"/></linearGradient><linearGradient id=\"SVG2kBjB0tJ\" x1=\"4.189\" x2=\"6.737\" y1=\"3.665\" y2=\"7.734\" gradientUnits=\"userSpaceOnUse\"><stop offset=\".125\" stop-color=\"#bd96ff\"/><stop offset=\"1\" stop-color=\"#9c6cfe\"/></linearGradient><linearGradient id=\"SVG7UcqRLQv\" x1=\"7.321\" x2=\"13.533\" y1=\"8.688\" y2=\"15.141\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#52d17c\"/><stop offset=\"1\" stop-color=\"#22918b\"/></linearGradient><linearGradient id=\"SVGqjbjscWV\" x1=\"9\" x2=\"13.142\" y1=\"8\" y2=\"14.238\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#fff\"/><stop offset=\"1\" stop-color=\"#e3ffd9\"/></linearGradient><radialGradient id=\"SVGDX11AI3z\" cx=\"0\" cy=\"0\" r=\"1\" gradientTransform=\"matrix(1.78571 3.60714 -3.64613 1.80502 10 11.5)\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#30116e\"/><stop offset=\".541\" stop-color=\"#30116e\" stop-opacity=\".812\"/><stop offset=\"1\" stop-color=\"#30116e\" stop-opacity=\"0\"/></radialGradient></defs></g></svg>"
     },
     "resources": {
-      "account": {
+      "startups": {
         "source": {
-          "name": "account"
+          "name": "startups"
         },
-        "displayName": "Account"
-      },
-      "bulkVerification": {
-        "source": {
-          "name": "bulkVerification"
-        },
-        "displayName": "Bulk verification"
+        "displayName": "Startups"
       }
     },
     "operations": {
-      "checkAccountBalance": {
+      "getStartup": {
         "source": {
-          "id": "checkAccountBalance",
+          "id": "getStartup",
           "method": "GET",
-          "path": "/check-account-balance/"
+          "path": "/startups/{slug}"
         },
-        "displayName": "Check remaining credits",
-        "description": "Returns the account's API status  daily and instant credits.",
+        "displayName": "Get a startup by slug",
+        "description": "Returns the full startup profile and detail fields.",
         "hidden": false,
-        "resource": "account"
+        "resource": "startups"
       },
-      "createBulkVerificationTask": {
+      "listStartups": {
         "source": {
-          "id": "createBulkVerificationTask",
-          "method": "POST",
-          "path": "/create-bulk-verification-task/"
-        },
-        "displayName": "Create a bulk verification task",
-        "description": "Submits up to 50,000 email addresses for asynchronous verification in power mode. Reoon removes duplicate addresses before processing. The API key must be included in the JSON body.",
-        "hidden": false,
-        "resource": "bulkVerification"
-      },
-      "getBulkVerificationTaskResult": {
-        "source": {
-          "id": "getBulkVerificationTaskResult",
+          "id": "listStartups",
           "method": "GET",
-          "path": "/get-result-bulk-verification-task/"
+          "path": "/startups"
         },
-        "displayName": "Get bulk task progress or results",
-        "description": "Returns task progress while verification is running and email results when they are ready. Reoon's formal request URL uses `task_id`; one Python example in its documentation uses `task-id` instead.",
+        "displayName": "List and filter startups",
+        "description": "Returns a paginated list of startups with verified revenue.",
         "hidden": false,
-        "removed": true,
-        "resource": "bulkVerification"
-      },
-      "verifyEmail": {
-        "source": {
-          "id": "verifyEmail",
-          "method": "GET",
-          "path": "/verify"
-        },
-        "displayName": "Verify one email",
-        "description": "Quick mode is the default and checks syntax, disposable status, MX and related signals without checking whether the individual inbox exists. Power mode performs deeper checks and can take from seconds to over a minute. Reoon advises against continuously using this endpoint with more than five concurrent threads; use the bulk API for larger lists.",
-        "hidden": false,
-        "resource": "bulkVerification"
+        "resource": "startups"
       }
     },
     "credentials": {
-      "ReoonApiKey": {
+      "TrustMRRBearer": {
         "source": {
-          "id": "ReoonApiKey",
-          "type": "apiKey"
+          "id": "TrustMRRBearer",
+          "type": "bearer"
         }
       }
     }

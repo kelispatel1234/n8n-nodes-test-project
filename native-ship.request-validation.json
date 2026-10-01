@@ -2,19 +2,28 @@
   "schemaVersion": 1,
   "fixtures": [
     {
-      "operationId": "checkAccountBalance",
+      "operationId": "getStartup",
       "method": "GET",
-      "path": "/check-account-balance/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+      "path": "/startups/{slug}",
+      "serverId": "documentServer1HttpsTrustmrrComApiV1",
       "authentication": [
         {
           "schemes": [
-            "ReoonApiKey"
+            "TrustMRRBearer"
           ],
           "scopes": []
         }
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "name": "slug",
+          "inputName": "slug",
+          "sample": "value/id",
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
       "request": {
         "contentType": "application/json",
         "representation": "structured",
@@ -27,204 +36,50 @@
       "response": {
         "fields": [
           {
-            "name": "api_status",
-            "type": "string"
-          },
-          {
-            "name": "remaining_daily_credits",
-            "type": "integer"
-          },
-          {
-            "name": "remaining_instant_credits",
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "type": "string"
+            "name": "data",
+            "type": "object"
           }
         ],
         "simplifiedFields": [
-          "api_status",
-          "remaining_daily_credits",
-          "remaining_instant_credits",
-          "status"
-        ]
-      },
-      "errors": [],
-      "requestPlan": {
-        "operationId": "checkAccountBalance",
-        "method": "GET",
-        "path": "/check-account-balance/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-        "request": {
-          "method": "GET",
-          "url": "=/check-account-balance/",
-          "query": [],
-          "body": [],
-          "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          }
-        },
-        "authentication": [
-          {
-            "schemes": [
-              "ReoonApiKey"
-            ],
-            "scopes": []
-          }
-        ],
-        "retry": {},
-        "pagination": {
-          "style": "none"
-        },
-        "response": {
-          "fields": [
-            {
-              "name": "api_status",
-              "type": "string"
-            },
-            {
-              "name": "remaining_daily_credits",
-              "type": "integer"
-            },
-            {
-              "name": "remaining_instant_credits",
-              "type": "integer"
-            },
-            {
-              "name": "status",
-              "type": "string"
-            }
-          ],
-          "simplifiedFields": [
-            "api_status",
-            "remaining_daily_credits",
-            "remaining_instant_credits",
-            "status"
-          ]
-        },
-        "errors": [],
-        "unsupportedSemantics": []
-      },
-      "assertions": [
-        "retry attempts preserve request and pagination state until a response succeeds",
-        "pagination advances only after a completed page response",
-        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
-      ]
-    },
-    {
-      "operationId": "createBulkVerificationTask",
-      "method": "POST",
-      "path": "/create-bulk-verification-task/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-      "authentication": [
-        {
-          "schemes": [
-            "ReoonApiKey"
-          ],
-          "scopes": []
-        }
-      ],
-      "parameters": [],
-      "request": {
-        "contentType": "application/json",
-        "representation": "structured",
-        "fields": [
-          {
-            "name": "emails",
-            "inputName": "emails",
-            "sample": [
-              "value/id"
-            ],
-            "type": "array",
-            "required": true
-          },
-          {
-            "name": "key",
-            "inputName": "key",
-            "sample": "value/id",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "name",
-            "inputName": "name",
-            "sample": "value/id",
-            "type": "string",
-            "required": false
-          }
-        ]
-      },
-      "retry": {},
-      "pagination": {
-        "style": "none"
-      },
-      "response": {
-        "fields": [
-          {
-            "name": "count_duplicates_removed",
-            "type": "integer"
-          },
-          {
-            "name": "count_processing",
-            "type": "integer"
-          },
-          {
-            "name": "count_rejected_emails",
-            "type": "integer"
-          },
-          {
-            "name": "count_submitted",
-            "type": "integer"
-          },
-          {
-            "name": "status",
-            "type": "string"
-          },
-          {
-            "name": "task_id",
-            "type": "integer"
-          }
-        ],
-        "simplifiedFields": [
-          "count_duplicates_removed",
-          "count_processing",
-          "count_rejected_emails",
-          "count_submitted",
-          "status",
-          "task_id"
+          "data"
         ]
       },
       "errors": [
         {
-          "status": "default",
-          "title": "Reoon returned an API-level error. The HTTP status is not specified in the documentation."
+          "status": "400",
+          "title": "Invalid or missing request parameters."
+        },
+        {
+          "status": "401",
+          "title": "The API key is missing or invalid."
+        },
+        {
+          "status": "403",
+          "title": "API access is disabled under the Acceptable Use Policy."
+        },
+        {
+          "status": "404",
+          "title": "The requested resource does not exist."
+        },
+        {
+          "status": "429",
+          "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+        },
+        {
+          "status": "500",
+          "title": "An unexpected server error occurred."
         }
       ],
       "requestPlan": {
-        "operationId": "createBulkVerificationTask",
-        "method": "POST",
-        "path": "/create-bulk-verification-task/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+        "operationId": "getStartup",
+        "method": "GET",
+        "path": "/startups/{slug}",
+        "serverId": "documentServer1HttpsTrustmrrComApiV1",
         "request": {
-          "method": "POST",
-          "url": "=/create-bulk-verification-task/",
+          "method": "GET",
+          "url": "=/startups/{{$parameter[\"slug\"]}}",
           "query": [],
-          "body": [
-            {
-              "name": "emails",
-              "source": "parameter"
-            },
-            {
-              "name": "key",
-              "source": "parameter"
-            },
-            {
-              "name": "name",
-              "source": "additionalFields"
-            }
-          ],
+          "body": [],
           "headers": {
             "Accept": "application/json",
             "Content-Type": "application/json"
@@ -233,7 +88,7 @@
         "authentication": [
           {
             "schemes": [
-              "ReoonApiKey"
+              "TrustMRRBearer"
             ],
             "scopes": []
           }
@@ -245,123 +100,40 @@
         "response": {
           "fields": [
             {
-              "name": "count_duplicates_removed",
-              "type": "integer"
-            },
-            {
-              "name": "count_processing",
-              "type": "integer"
-            },
-            {
-              "name": "count_rejected_emails",
-              "type": "integer"
-            },
-            {
-              "name": "count_submitted",
-              "type": "integer"
-            },
-            {
-              "name": "status",
-              "type": "string"
-            },
-            {
-              "name": "task_id",
-              "type": "integer"
+              "name": "data",
+              "type": "object"
             }
           ],
           "simplifiedFields": [
-            "count_duplicates_removed",
-            "count_processing",
-            "count_rejected_emails",
-            "count_submitted",
-            "status",
-            "task_id"
+            "data"
           ]
         },
         "errors": [
           {
-            "status": "default",
-            "title": "Reoon returned an API-level error. The HTTP status is not specified in the documentation."
-          }
-        ],
-        "unsupportedSemantics": [
-          "advanced parameter emails"
-        ]
-      },
-      "assertions": [
-        "retry attempts preserve request and pagination state until a response succeeds",
-        "pagination advances only after a completed page response",
-        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
-      ]
-    },
-    {
-      "operationId": "getBulkVerificationTaskResult",
-      "method": "GET",
-      "path": "/get-result-bulk-verification-task/",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-      "authentication": [
-        {
-          "schemes": [
-            "ReoonApiKey"
-          ],
-          "scopes": []
-        }
-      ],
-      "parameters": [
-        {
-          "name": "task_id",
-          "inputName": "task_id",
-          "sample": "value/id",
-          "location": "query",
-          "required": true,
-          "arrayFormat": "indices"
-        }
-      ],
-      "request": {
-        "contentType": "application/json",
-        "representation": "structured",
-        "fields": []
-      },
-      "retry": {},
-      "pagination": {
-        "style": "none"
-      },
-      "response": {},
-      "errors": [],
-      "requestPlan": {
-        "operationId": "getBulkVerificationTaskResult",
-        "method": "GET",
-        "path": "/get-result-bulk-verification-task/",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
-        "request": {
-          "method": "GET",
-          "url": "=/get-result-bulk-verification-task/",
-          "query": [
-            {
-              "name": "task_id",
-              "source": "parameter"
-            }
-          ],
-          "body": [],
-          "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          }
-        },
-        "authentication": [
+            "status": "400",
+            "title": "Invalid or missing request parameters."
+          },
           {
-            "schemes": [
-              "ReoonApiKey"
-            ],
-            "scopes": []
+            "status": "401",
+            "title": "The API key is missing or invalid."
+          },
+          {
+            "status": "403",
+            "title": "API access is disabled under the Acceptable Use Policy."
+          },
+          {
+            "status": "404",
+            "title": "The requested resource does not exist."
+          },
+          {
+            "status": "429",
+            "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+          },
+          {
+            "status": "500",
+            "title": "An unexpected server error occurred."
           }
         ],
-        "retry": {},
-        "pagination": {
-          "style": "none"
-        },
-        "response": {},
-        "errors": [],
         "unsupportedSemantics": []
       },
       "assertions": [
@@ -371,36 +143,203 @@
       ]
     },
     {
-      "operationId": "verifyEmail",
+      "operationId": "listStartups",
       "method": "GET",
-      "path": "/verify",
-      "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+      "path": "/startups",
+      "serverId": "documentServer1HttpsTrustmrrComApiV1",
       "authentication": [
         {
           "schemes": [
-            "ReoonApiKey"
+            "TrustMRRBearer"
           ],
           "scopes": []
         }
       ],
       "parameters": [
         {
-          "name": "email",
-          "inputName": "email",
-          "sample": "value/id",
+          "name": "page",
+          "inputName": "page",
+          "sample": 1,
+          "default": 1,
           "location": "query",
-          "required": true,
+          "required": false,
           "arrayFormat": "indices"
         },
         {
-          "name": "mode",
-          "inputName": "mode",
-          "sample": "quick",
-          "default": "quick",
+          "name": "limit",
+          "inputName": "limit",
+          "sample": 10,
+          "default": 10,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "sort",
+          "inputName": "sort",
+          "sample": "revenue-desc",
           "enum": [
-            "quick",
-            "power"
+            "revenue-desc",
+            "revenue-asc",
+            "price-desc",
+            "price-asc",
+            "multiple-asc",
+            "multiple-desc",
+            "growth-desc",
+            "growth-asc",
+            "listed-desc",
+            "listed-asc",
+            "best-deal"
           ],
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "onSale",
+          "inputName": "onSale",
+          "sample": true,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "category",
+          "inputName": "category",
+          "sample": "ai",
+          "enum": [
+            "ai",
+            "saas",
+            "developer-tools",
+            "fintech",
+            "marketing",
+            "ecommerce",
+            "productivity",
+            "design-tools",
+            "no-code",
+            "analytics",
+            "crypto-web3",
+            "education",
+            "health-fitness",
+            "social-media",
+            "content-creation",
+            "sales",
+            "customer-support",
+            "recruiting",
+            "real-estate",
+            "travel",
+            "legal",
+            "security",
+            "iot-hardware",
+            "green-tech",
+            "entertainment",
+            "games",
+            "community",
+            "news-magazines",
+            "utilities",
+            "marketplace",
+            "mobile-apps"
+          ],
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "xHandle",
+          "inputName": "xHandle",
+          "sample": "value/id",
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "teamSize",
+          "inputName": "teamSize",
+          "sample": "1",
+          "enum": [
+            "1",
+            "2-5",
+            "6-10",
+            "11-25",
+            "26-50",
+            "51+"
+          ],
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "fundingStatus",
+          "inputName": "fundingStatus",
+          "sample": "bootstrapped",
+          "enum": [
+            "bootstrapped",
+            "vc-funded"
+          ],
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minRevenue",
+          "inputName": "minRevenue",
+          "sample": 2,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxRevenue",
+          "inputName": "maxRevenue",
+          "sample": 2,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minMrr",
+          "inputName": "minMrr",
+          "sample": 2,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxMrr",
+          "inputName": "maxMrr",
+          "sample": 2,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minGrowth",
+          "inputName": "minGrowth",
+          "sample": 2.5,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxGrowth",
+          "inputName": "maxGrowth",
+          "sample": 2.5,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "minPrice",
+          "inputName": "minPrice",
+          "sample": 2,
+          "location": "query",
+          "required": false,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "maxPrice",
+          "inputName": "maxPrice",
+          "sample": 2,
           "location": "query",
           "required": false,
           "arrayFormat": "indices"
@@ -415,23 +354,119 @@
       "pagination": {
         "style": "none"
       },
-      "response": {},
-      "errors": [],
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "array"
+          },
+          {
+            "name": "meta",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "data",
+          "meta"
+        ]
+      },
+      "errors": [
+        {
+          "status": "400",
+          "title": "Invalid or missing request parameters."
+        },
+        {
+          "status": "401",
+          "title": "The API key is missing or invalid."
+        },
+        {
+          "status": "403",
+          "title": "API access is disabled under the Acceptable Use Policy."
+        },
+        {
+          "status": "404",
+          "title": "The requested resource does not exist."
+        },
+        {
+          "status": "429",
+          "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+        },
+        {
+          "status": "500",
+          "title": "An unexpected server error occurred."
+        }
+      ],
       "requestPlan": {
-        "operationId": "verifyEmail",
+        "operationId": "listStartups",
         "method": "GET",
-        "path": "/verify",
-        "serverId": "documentServer1HttpsEmailverifierReoonComApiV1",
+        "path": "/startups",
+        "serverId": "documentServer1HttpsTrustmrrComApiV1",
         "request": {
           "method": "GET",
-          "url": "=/verify",
+          "url": "=/startups",
           "query": [
             {
-              "name": "email",
-              "source": "parameter"
+              "name": "page",
+              "source": "additionalFields"
             },
             {
-              "name": "mode",
+              "name": "limit",
+              "source": "additionalFields"
+            },
+            {
+              "name": "sort",
+              "source": "additionalFields"
+            },
+            {
+              "name": "onSale",
+              "source": "additionalFields"
+            },
+            {
+              "name": "category",
+              "source": "additionalFields"
+            },
+            {
+              "name": "xHandle",
+              "source": "additionalFields"
+            },
+            {
+              "name": "teamSize",
+              "source": "additionalFields"
+            },
+            {
+              "name": "fundingStatus",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minRevenue",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxRevenue",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minMrr",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxMrr",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minGrowth",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxGrowth",
+              "source": "additionalFields"
+            },
+            {
+              "name": "minPrice",
+              "source": "additionalFields"
+            },
+            {
+              "name": "maxPrice",
               "source": "additionalFields"
             }
           ],
@@ -444,7 +479,7 @@
         "authentication": [
           {
             "schemes": [
-              "ReoonApiKey"
+              "TrustMRRBearer"
             ],
             "scopes": []
           }
@@ -453,8 +488,48 @@
         "pagination": {
           "style": "none"
         },
-        "response": {},
-        "errors": [],
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "array"
+            },
+            {
+              "name": "meta",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "data",
+            "meta"
+          ]
+        },
+        "errors": [
+          {
+            "status": "400",
+            "title": "Invalid or missing request parameters."
+          },
+          {
+            "status": "401",
+            "title": "The API key is missing or invalid."
+          },
+          {
+            "status": "403",
+            "title": "API access is disabled under the Acceptable Use Policy."
+          },
+          {
+            "status": "404",
+            "title": "The requested resource does not exist."
+          },
+          {
+            "status": "429",
+            "title": "Rate limit exceeded. Check the rate-limit headers before retrying."
+          },
+          {
+            "status": "500",
+            "title": "An unexpected server error occurred."
+          }
+        ],
         "unsupportedSemantics": []
       },
       "assertions": [

@@ -11,7 +11,7 @@ export class TestProjectForNativeshipApi implements ICredentialType {
     };
   properties: INodeProperties[] = [
         {
-            displayName: "key",
+            displayName: "Access Token",
             name: "secret",
             type: "string",
             typeOptions: {
@@ -24,15 +24,15 @@ export class TestProjectForNativeshipApi implements ICredentialType {
   authenticate: IAuthenticateGeneric = {
         type: "generic",
         properties: {
-            qs: {
-                key: "={{$credentials.secret}}"
+            headers: {
+                Authorization: "=Bearer {{$credentials.secret}}"
             }
         }
     };
   test: ICredentialTestRequest = {
         request: {
-            baseURL: "https://emailverifier.reoon.com/api/v1",
-            url: "/check-account-balance/"
+            baseURL: "https://trustmrr.com/api/v1",
+            url: "/startups"
         }
     };
 }

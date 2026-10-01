@@ -6,20 +6,14 @@ Generated from OpenAPI 1.0.0 with template 1.1.0. Generated files are platform-m
 
 ## Authentication
 
-Configure the generated API key credential in n8n before using the node.
+Configure the generated bearer token credential in n8n before using the node.
 
 ## Supported operations
 
-- `GET /check-account-balance/` - Check remaining credits
+- `GET /startups/{slug}` - Get a startup by slug
   - Retry Contract: none
   - Pagination Contract: none
-- `POST /create-bulk-verification-task/` - Create a bulk verification task
-  - Retry Contract: none
-  - Pagination Contract: none
-- `GET /get-result-bulk-verification-task/` - Get bulk task progress or results
-  - Retry Contract: none
-  - Pagination Contract: none
-- `GET /verify` - Verify one email
+- `GET /startups` - List and filter startups
   - Retry Contract: none
   - Pagination Contract: none
 

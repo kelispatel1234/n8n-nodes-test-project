@@ -12,7 +12,7 @@ class TestProjectForNativeshipApi {
         };
         this.properties = [
             {
-                displayName: "key",
+                displayName: "Access Token",
                 name: "secret",
                 type: "string",
                 typeOptions: {
@@ -25,15 +25,15 @@ class TestProjectForNativeshipApi {
         this.authenticate = {
             type: "generic",
             properties: {
-                qs: {
-                    key: "={{$credentials.secret}}"
+                headers: {
+                    Authorization: "=Bearer {{$credentials.secret}}"
                 }
             }
         };
         this.test = {
             request: {
-                baseURL: "https://emailverifier.reoon.com/api/v1",
-                url: "/check-account-balance/"
+                baseURL: "https://trustmrr.com/api/v1",
+                url: "/startups"
             }
         };
     }
