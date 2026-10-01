@@ -1,0 +1,57 @@
+{
+  "author": {
+    "email": "kelish.imedia@gmail.com",
+    "name": "kelispatel1234",
+    "url": "https://github.com/kelispatel1234"
+  },
+  "description": "this project is for test",
+  "devDependencies": {
+    "@n8n/node-cli": "0.41.2",
+    "@types/node": "22.15.29",
+    "eslint": "9.29.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": "\u003e=22.22.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/kelispatel1234/n8n-nodes-test-project",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "n8n": {
+    "credentials": [
+      "dist/credentials/TestProjectForNativeshipApi.credentials.js"
+    ],
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/TestProjectForNativeship/TestProjectForNativeship.node.js"
+    ],
+    "strict": true
+  },
+  "name": "n8n-nodes-test-project",
+  "nativeShip": {
+    "artifactSha256": "3f34f86170d85bae5aacec061a0102f865f404e10df5e414bfc8fadf43abd31b"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelispatel1234/n8n-nodes-test-project.git"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix"
+  },
+  "version": "1.0.0"
+}
